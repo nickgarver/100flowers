@@ -1,0 +1,205 @@
+    @font-face {
+        font-family: 'Helvetica Neue Custom';
+        src: url('/media/HelveticaNeueMed.otf') format('opentype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    body, html { 
+        margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; 
+        background-color: #fff; font-family: 'Helvetica Neue Custom', sans-serif; 
+    }
+    
+    canvas { display: block; width: 100%; height: 100%; cursor: crosshair; touch-action: none; }
+    
+        /* EXISTING UI */
+    .main-link {
+        position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;
+        padding: 18px 45px; font-size: 1rem; font-weight: 500; color: #000;
+        text-decoration: none; text-transform: uppercase;
+        letter-spacing: 0.1em;
+        background: rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(25px) saturate(180%);
+        -webkit-backdrop-filter: blur(25px) saturate(180%);
+        border-radius: 40px;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.7), 0 20px 40px rgba(0, 0, 0, 0.1);
+        transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        text-align: center; white-space: nowrap;
+    }
+
+    .main-link:hover {
+        background: rgba(255, 255, 255, 0.5);
+        transform: translate(-50%, -52%) scale(1.02);
+        letter-spacing: 0.15em;
+    }
+    /* MERGED LIQUID GLASS SIDEBAR */
+    #sidebar {
+        position: fixed;
+        left: 20px;
+        bottom: 20px;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+                background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(25px) saturate(180%);
+        -webkit-backdrop-filter: blur(25px) saturate(180%);
+        border-radius: 22px;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+
+        /* Container has no background, only the children do */
+    }
+
+    .glass-panel {
+        max-width: 0px;
+        height: 44px;
+        overflow: hidden;
+        visibility: hidden;
+        
+        display: flex;
+        align-items: center;
+        
+        /* 2. Added visibility to the transition list */
+        transition: 
+            max-width 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
+            visibility 0.4s ease,
+            padding 0.6s ease;
+        padding: 0;
+    }
+
+    #sidebar.expanded .glass-panel {
+        max-width: 20em;
+        padding: 0 .2em;
+        visibility: visible;
+        /* 3. Bring the border back only when expanded */
+        
+        border-right: none;
+    }
+
+    /* 4. Ensure the toggle button left border matches the state */
+    #sidebar:not(.expanded) .toggle-btn {
+        border-radius: 22px;
+    }
+    .toggle-btn {
+        width: 44px;
+        height: 44px;
+        /* background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(25px) saturate(180%);
+        -webkit-backdrop-filter: blur(25px) saturate(180%); */
+        border-radius: 22px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #000; /* need to fix this black edge */
+        font-size: 0.8rem;
+        /* box-shadow: 5px 10px 30px rgba(0, 0, 0, 0.1); */
+        transition: all 1s ease;
+    }
+
+    /* Keep button rounded if panel is hidden */
+    #sidebar:not(.expanded) .toggle-btn {
+        /* border-left: 1px solid rgba(255, 255, 255, 0.4); */
+    }
+
+    .toggle-btn:hover { background: rgba(255, 255, 255, 0.4); }
+
+    /* REFINED GLASS SLIDER */
+    input[type=range] {
+        -webkit-appearance: none;
+        appearance: none; /* Generic appearance for Firefox */
+        width: 100%;
+        height: 2em;
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(25px) saturate(180%);
+        -webkit-backdrop-filter: blur(25px) saturate(180%);
+        border-radius: 5em;
+        opacity: 1;
+        transition: width 0.6s ease, opacity 1s cubic-bezier(0.16, 1, 0.3, 1);
+        cursor: pointer;
+    }
+
+    #sidebar:not(.expanded) input[type=range] {
+        opacity: 0;
+        width: 0%;
+    }
+
+    input[type=range]:focus { outline: none; }
+
+    /* --- TRACK (Webkit & Firefox) --- */
+    input[type=range]::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        border-radius: 10em;
+    }
+
+    input[type=range]::-moz-range-track {
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        border-radius: 10em;
+    }
+
+    /* --- THUMB (Webkit) --- */
+    input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        height: 2em;
+        width: 2em;
+        border-radius: 10em;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(25px) saturate(180%);
+        -webkit-backdrop-filter: blur(25px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        transition: transform 0.2s ease;
+    }
+
+    /* --- THUMB (Firefox) --- */
+    input[type=range]::-moz-range-thumb {
+        height: 2em;
+        width: 2em;
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        border-radius: 10em;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        transition: transform 0.2s ease;
+        cursor: pointer;
+    }
+
+    /* --- ACTIVE STATES --- */
+    input[type=range]::-webkit-slider-thumb:active {
+        transform: scale(1.2);
+    }
+
+    input[type=range]::-moz-range-thumb:active {
+        transform: scale(1.2);
+    }
+    
+    /* Firefox fix: removes the dotted focus ring */
+    input[type=range]::-moz-focus-outer {
+        border: 0;
+    }
+    
+    /* EXISTING UI */
+    .main-text {
+        position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10;
+        padding: 18px 45px; font-size: 1rem; font-weight: 500; color: #000;
+        text-decoration: none; text-transform: lowercase;
+        border-radius: 40px;
+        transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        text-align: center; 
+        width: 25em;
+    }
+
+    .link {
+        opacity: 0.8;
+        position: fixed; z-index: 10; padding: 0px; font-size: 1em; font-weight: 400; color: #000;
+        text-decoration: none; text-transform: uppercase; transition: all 0.5s ease;
+        white-space: nowrap; letter-spacing: 0.1em;
+    }
+    .tl { top: 1em; left: 1em; }
+    .tr { top: 1em; right: 1em; }
+    .bl { bottom: 1em; left: 1em; }
+    .br { bottom: 1em; right: 1em; }
