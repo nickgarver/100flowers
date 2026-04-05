@@ -92,12 +92,36 @@ window.onload = function() {
     const sidebar = document.getElementById('sidebar');
     const toggleBtn = document.getElementById('toggle-btn');
 
+    const ethosBtn = document.getElementById('ethos-btn');
+    const homeBtn = document.getElementById('home-btn');
+    const archiveBtn = document.getElementById('archive-btn');
+
+
     if (!gl) return;
 
     toggleBtn.onclick = () => {
         sidebar.classList.toggle('expanded');
         toggleBtn.innerText = sidebar.classList.contains('expanded') ? '❮' : '❯';
     };
+
+    ethosBtn.onclick = () => {
+        document.getElementById('archive').classList.add('hide');
+        document.getElementById('home').classList.add('hide');
+        document.getElementById('ethos').classList.remove('hide');
+        document.getElementById('home-btn').classList.remove('hide');
+    };
+
+    homeBtn.onclick = () => {
+        document.getElementById('ethos').classList.add('hide');
+        document.getElementById('archive').classList.add('hide');
+        document.getElementById('home').classList.remove('hide');
+    }
+
+    archiveBtn.onclick = () => {
+        document.getElementById('ethos').classList.add('hide');
+        document.getElementById('home').classList.add('hide');
+        document.getElementById('archive').classList.remove('hide');
+    }
 
     let audioContext, analyser, dataArray, source;
     let rawBass = 0, smoothedBass = 0, hasPlayed = false;
