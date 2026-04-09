@@ -228,7 +228,7 @@
     .ml { top: 50%; left: 1em; transform: translateY(-50%); }
     .bl { bottom: 0em; left: 0em; }
     .br { bottom: 0em; right: 0em; }
-
+    .bm { bottom: 1em; left: 50%; transform: translateX(-50%); }
     #home-btn, #ethos-btn, #archive-btn {
         cursor: pointer;
     }
